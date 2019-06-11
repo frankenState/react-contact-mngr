@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Consumer } from '../../Context';
-
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
@@ -42,6 +39,7 @@ const TextInputField = ({type, label, onChange, defaultValue, name}) => {
         onChange={onChange}
         value={defaultValue}
         name={name}
+        required
       />
   )
 }

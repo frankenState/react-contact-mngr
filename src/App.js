@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 
@@ -7,20 +8,26 @@ import { Provider } from './Context';
 import Container from '@material-ui/core/Container';
 
 import Header from './components/layout/Header';
+import About from './components/pages/About';
 import Contacts from './components/contacts/Contacts';
 import AddContact from './components/contacts/AddContact';
 
 function App() {
   return (
     <Provider>
+    	<Router>
     	<div className="App">
 	      <Header />
 	      
 	      <Container maxWidth="sm">
-	      	<AddContact/>
-	      	<Contacts/>
+	      	<Switch>
+	      		<Route exact path="/" component={Contacts} />
+	      		<Route exact path="/contact/add" component={AddContact} />
+	      		<Route exact path="/about" component={About} />
+	      	</Switch>
 	      </Container>
 	    </div>
+	    </Router>
     </Provider>
   );
 }
