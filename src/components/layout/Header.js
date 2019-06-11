@@ -8,6 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import Store from '@material-ui/icons/Store';
+import AddCircle from '@material-ui/icons/AddCircle';
+import Book from '@material-ui/icons/Book';
 
 const useStyles = makeStyles({
 	root: {
@@ -32,6 +34,22 @@ export default function Header(){
 						to="/"
 					>
 					<Store />
+					</Link>
+					<Link 
+						className={classes.root}
+						style={{color:'#fff'}} 
+						component={RouterLink} 
+						to="/contact/add"
+					>
+					<AddCircle />
+					</Link>
+					<Link 
+						className={classes.root}
+						style={{color:'#fff'}} 
+						component={RouterLink} 
+						to="/about"
+					>
+					<Book />
 					</Link>
 				</Toolbar>
 			</AppBar>
