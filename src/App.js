@@ -6,8 +6,8 @@ import { Provider } from './Context';
 
 import Container from '@material-ui/core/Container';
 
-import Header from './components/Header';
-import Contacts from './components/Contacts';
+import Header from './components/layout/Header';
+import Contacts from './components/contacts/Contacts';
 
 function App() {
   return (
