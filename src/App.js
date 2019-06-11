@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 
 import Header from './components/layout/Header';
 import Contacts from './components/contacts/Contacts';
+import AddContact from './components/contacts/AddContact';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
 	      <Header />
 	      
 	      <Container maxWidth="sm">
+	      	<AddContact/>
 	      	<Contacts/>
 	      </Container>
 	    </div>
