@@ -1,6 +1,8 @@
 import React from 'react';
 import { Consumer } from '../../Context';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -12,7 +14,9 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Clear from '@material-ui/icons/Clear';
-import { pink } from '@material-ui/core/colors';
+import ViewList from '@material-ui/icons/ViewList';
+import { blue, pink } from '@material-ui/core/colors';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -36,21 +40,36 @@ const useStyles = makeStyles(theme => ({
 		margin: 10,
 		color: '#fff',
 		backgroundColor: pink[500]
+	},
+	avatarIcon1: {
+		width: 20,
+		height: 20,
+		margin: 10,
+		color: '#fff',
+		backgroundColor: blue[500]
 	}
 }))
 
-const onDeleteClick = (id, dispatch) => { 
-	dispatch({
-		type: 'DELETE_CONTACT',
-		payload: id
-	})
+const onDeleteClick = async (id, dispatch) => { 
+
+	try {
+		await axios.delete('https://jsonplaceholder.typicode.com/users/' + id);
+	} catch (e) {
+		console.log(e);
+	} finally {
+		dispatch({
+			type: 'DELETE_CONTACT',
+			payload: id
+		});
+	}
+
+	
 }
 
 const Contact = (props) => {
   const classes = useStyles();
-  const { id, name, phone, email} = props.contact;
-
-
+  const { id, name, phone, email } = props.contact;
+  
   return (
 
   	<Consumer>
@@ -84,6 +103,11 @@ const Contact = (props) => {
 			    		<Avatar onClick={onDeleteClick.bind(this, id, dispatch)} className={classes.avatarIcon} >
 			    			<Clear className={classes.icon} />
 			    		</Avatar>
+			    		<Link component={RouterLink} to={`/contact/edit/${id}`} >
+			    			<Avatar className={classes.avatarIcon1} >
+				    			<ViewList className={classes.icon} />
+				    		</Avatar>
+			    		</Link>
 			    	</Grid>
 			    </Grid>
   			)
