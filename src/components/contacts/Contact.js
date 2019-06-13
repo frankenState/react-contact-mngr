@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { deleteContact } from '../../actions/contactActions';
+
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
@@ -49,17 +52,15 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const onDeleteClick = () => { 
-
-	console.log("DELETE CLICKED!");
-
-	
+const onDeleteClick = (id, deleteContact) => { 
+	deleteContact(id);
 }
 
 const Contact = (props) => {
   const classes = useStyles();
   const { id, name, phone, email } = props.contact;
-  
+  const { deleteContact } = props;
+
   return (
 	<Grid container>
 		<Grid item xs={8}>
@@ -83,7 +84,7 @@ const Contact = (props) => {
 		    </List>
 		</Grid>
 		<Grid item xs={4}>
-			<Avatar onClick={onDeleteClick} className={classes.avatarIcon} >
+			<Avatar onClick={onDeleteClick.bind(this, id, deleteContact)} className={classes.avatarIcon} >
 				<Clear className={classes.icon} />
 			</Avatar>
 			<Link component={RouterLink} to={`/contact/edit/${id}`} >
@@ -97,7 +98,11 @@ const Contact = (props) => {
 }
 
 Contact.propTypes = {
-	contact: PropTypes.object.isRequired
+	contact: PropTypes.object.isRequired,
+	deleteContact: PropTypes.func.isRequired
 }
 
-export default Contact;
+export default connect(
+	null, 
+	{ deleteContact }
+)(Contact);
