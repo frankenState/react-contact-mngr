@@ -1,5 +1,4 @@
 import React from 'react';
-import { Consumer } from '../../Context';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
@@ -50,18 +49,9 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const onDeleteClick = async (id, dispatch) => { 
+const onDeleteClick = () => { 
 
-	try {
-		await axios.delete('https://jsonplaceholder.typicode.com/users/' + id);
-	} catch (e) {
-		console.log(e);
-	} finally {
-		dispatch({
-			type: 'DELETE_CONTACT',
-			payload: id
-		});
-	}
+	console.log("DELETE CLICKED!");
 
 	
 }
@@ -71,51 +61,39 @@ const Contact = (props) => {
   const { id, name, phone, email } = props.contact;
   
   return (
-
-  	<Consumer>
-  		{value => {
-
-  			const { dispatch } = value;
-
-  			return (
-  				<Grid container>
-			    	<Grid item xs={8}>
-			    		<List className={classes.root}>
-					    	<ListItem>
-						    	<ListItemAvatar>
-						          <Avatar>{name.toUpperCase().charAt(0)}</Avatar>
-						        </ListItemAvatar>
-						        <ListItemText 
-						        	primary={name} 
-						        	secondary={
-						        		<React.Fragment>
-						        			<Typography component="span">{phone}</Typography>
-						        			<br />
-						        			<Typography component="span">{email}</Typography>
-						        		</React.Fragment>
-						        	} 
-						        />
-					    	</ListItem>
-					    	<Divider variant="inset" component="li" />
-					    </List>
-			    	</Grid>
-			    	<Grid item xs={4}>
-			    		<Avatar onClick={onDeleteClick.bind(this, id, dispatch)} className={classes.avatarIcon} >
-			    			<Clear className={classes.icon} />
-			    		</Avatar>
-			    		<Link component={RouterLink} to={`/contact/edit/${id}`} >
-			    			<Avatar className={classes.avatarIcon1} >
-				    			<ViewList className={classes.icon} />
-				    		</Avatar>
-			    		</Link>
-			    	</Grid>
-			    </Grid>
-  			)
-  		}}
-  	</Consumer>
-
-    
-  )
+	<Grid container>
+		<Grid item xs={8}>
+			<List className={classes.root}>
+		    	<ListItem>
+			    	<ListItemAvatar>
+			          <Avatar>{name.toUpperCase().charAt(0)}</Avatar>
+			        </ListItemAvatar>
+			        <ListItemText 
+			        	primary={name} 
+			        	secondary={
+			        		<React.Fragment>
+			        			<Typography component="span">{phone}</Typography>
+			        			<br />
+			        			<Typography component="span">{email}</Typography>
+			        		</React.Fragment>
+			        	} 
+			        />
+		    	</ListItem>
+		    	<Divider variant="inset" component="li" />
+		    </List>
+		</Grid>
+		<Grid item xs={4}>
+			<Avatar onClick={onDeleteClick} className={classes.avatarIcon} >
+				<Clear className={classes.icon} />
+			</Avatar>
+			<Link component={RouterLink} to={`/contact/edit/${id}`} >
+				<Avatar className={classes.avatarIcon1} >
+	    			<ViewList className={classes.icon} />
+	    		</Avatar>
+			</Link>
+		</Grid>
+	</Grid>
+	)
 }
 
 Contact.propTypes = {
