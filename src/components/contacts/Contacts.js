@@ -9,6 +9,12 @@ import Typography from '@material-ui/core/Typography';
 
 class Contacts extends Component {
 
+
+	constructor(props){
+		super(props);
+		console.log("Constructor!");
+	}
+
 	componentDidMount() {
 		this.props.getContacts();
 	}

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getContact, updateContact } from '../../actions/contactActions';
 
 
 import TextInputField from './TextInputField';
@@ -17,11 +20,18 @@ class EditContact extends Component {
 		phone: '',
 	}
 
+	componentDidUpdate(){
+		if (this.state.name.length === 0 && this.props.contact.name.length !== 0){
+			this.setState({...this.props.contact});
+		}
+		return;
+	}
 
 	componentDidMount(){
 		const { id } = this.props.match.params;
 
-		
+		this.props.getContact(id);
+
 	}
 
 	handleChange = input => e => {
@@ -32,15 +42,12 @@ class EditContact extends Component {
 		this.setState({ [e.target.name]: e.target.value});
 	}
 
-	saveContact = (dispatch, e) => {
+	saveContact = (e) => {
 		e.preventDefault();
 		
 		const { id } = this.props.match.params;
-		const { name, email, phone} = this.state;
-
 		
-
-		
+		this.props.updateContact({...this.state});
 
 		this.setState({
 			name :"",
@@ -112,4 +119,16 @@ class EditContact extends Component {
 	}
 }
 
-export default EditContact;
+EditContact.propTypes = {
+	getContact: PropTypes.func.isRequired,
+	contact: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+	contact: state.contact.contact
+});
+
+export default connect(
+	mapStateToProps,
+	{getContact, updateContact},
+)(EditContact);

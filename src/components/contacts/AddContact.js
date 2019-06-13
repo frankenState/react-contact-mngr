@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addContact } from '../../actions/contactActions';
 
 import TextInputField from './TextInputField';
 import Typography from '@material-ui/core/Typography';
@@ -27,7 +30,9 @@ class AddContact extends Component {
 	saveContact = (e) => {
 		e.preventDefault();
 
-		console.log("SAVE CONTACT");
+		this.props.addContact({
+			...this.state
+		});
 
 		this.setState({
 			name :"",
@@ -99,4 +104,11 @@ class AddContact extends Component {
 	}
 }
 
-export default AddContact;
+AddContact.propTypes = {
+	addContact: PropTypes.func.isRequired
+}
+
+export default connect(
+	null,
+	{addContact}
+)(AddContact);
